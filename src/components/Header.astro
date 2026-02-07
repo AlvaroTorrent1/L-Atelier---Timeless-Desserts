@@ -33,11 +33,14 @@ function isActive(href: string): boolean {
   data-header
   data-transparent={transparent.toString()}
 >
-  <nav class="max-w-7xl mx-auto px-6 lg:px-8 py-6 flex items-center justify-between">
-    <!-- Logo -->
+  <nav class="max-w-7xl mx-auto px-6 lg:px-8 py-6 flex items-center">
+    <!-- Spacer for mobile centering (mirrors hamburger width) -->
+    <div class="md:hidden w-10"></div>
+
+    <!-- Logo (centered on mobile, left on desktop) -->
     <a 
       href={translatePath('/')} 
-      class="hover:opacity-80 transition-opacity"
+      class="hover:opacity-80 transition-opacity flex-1 md:flex-none flex justify-center md:justify-start"
       aria-label="Home"
     >
       <img 
@@ -48,7 +51,7 @@ function isActive(href: string): boolean {
     </a>
     
     <!-- Desktop Navigation -->
-    <ul class="hidden md:flex items-center gap-8">
+    <ul class="hidden md:flex items-center gap-8 ml-auto">
       {navItems.map(({ href, label }) => (
         <li>
           <a 
@@ -69,7 +72,7 @@ function isActive(href: string): boolean {
     
     <!-- Mobile Menu Button -->
     <button 
-      class="md:hidden p-2 -mr-2"
+      class="md:hidden p-2 w-10 flex justify-end"
       aria-label="Toggle menu"
       data-menu-toggle
     >
