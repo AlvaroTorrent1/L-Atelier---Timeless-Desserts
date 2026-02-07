@@ -1,0 +1,224 @@
+---
+export const prerender = true;
+
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FadeIn from '../../components/FadeIn.astro';
+import { useTranslations, useTranslatedPath } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'es' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as any);
+const translatePath = useTranslatedPath(lang as any);
+---
+
+<Base 
+  title={t('contact.page.title')} 
+  description={t('contact.page.description')}
+>
+  <Header />
+  
+  <main class="pt-24">
+    <!-- Hero -->
+    <section class="py-20 px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <FadeIn>
+          <h1 class="max-w-3xl">
+            {t('contact.hero')}
+          </h1>
+        </FadeIn>
+        <FadeIn delay={100}>
+          <p class="mt-6 text-muted max-w-2xl leading-relaxed">
+            {t('contact.hero.p')}
+          </p>
+        </FadeIn>
+      </div>
+    </section>
+    
+    <!-- Contact Content -->
+    <section class="py-16 px-6 lg:px-8 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+          <!-- Contact Form -->
+          <FadeIn>
+            <form class="space-y-8" data-contact-form data-lang={lang}>
+              <div class="space-y-2">
+                <label for="name" class="block text-sm uppercase tracking-widest">
+                  {t('contact.form.name')}
+                </label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name"
+                  required
+                  class="w-full px-0 py-3 bg-transparent border-0 border-b border-primary/20 focus:border-primary focus:ring-0 transition-colors placeholder:text-muted/50"
+                  placeholder={t('contact.form.name.placeholder')}
+                />
+              </div>
+              
+              <div class="space-y-2">
+                <label for="email" class="block text-sm uppercase tracking-widest">
+                  {t('contact.form.email')}
+                </label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email"
+                  required
+                  class="w-full px-0 py-3 bg-transparent border-0 border-b border-primary/20 focus:border-primary focus:ring-0 transition-colors placeholder:text-muted/50"
+                  placeholder={t('contact.form.email.placeholder')}
+                />
+              </div>
+              
+              <div class="space-y-2">
+                <label for="project" class="block text-sm uppercase tracking-widest">
+                  {t('contact.form.order')}
+                </label>
+                <select 
+                  id="project" 
+                  name="project"
+                  class="w-full px-0 py-3 bg-transparent border-0 border-b border-primary/20 focus:border-primary focus:ring-0 transition-colors"
+                >
+                  <option value="">{t('contact.form.order.select')}</option>
+                  <option value="custom-cake">{t('contact.form.order.cake')}</option>
+                  <option value="wedding">{t('contact.form.order.wedding')}</option>
+                  <option value="event">{t('contact.form.order.event')}</option>
+                  <option value="pastries">{t('contact.form.order.pastries')}</option>
+                  <option value="other">{t('contact.form.order.other')}</option>
+                </select>
+              </div>
+              
+              <div class="space-y-2">
+                <label for="message" class="block text-sm uppercase tracking-widest">
+                  {t('contact.form.message')}
+                </label>
+                <textarea 
+                  id="message" 
+                  name="message"
+                  rows="5"
+                  required
+                  class="w-full px-0 py-3 bg-transparent border-0 border-b border-primary/20 focus:border-primary focus:ring-0 transition-colors resize-none placeholder:text-muted/50"
+                  placeholder={t('contact.form.message.placeholder')}
+                ></textarea>
+              </div>
+              
+              <button 
+                type="submit"
+                class="inline-block px-10 py-4 bg-accent text-white text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors"
+                data-submit-text={t('contact.form.submit')}
+                data-sending-text={t('contact.form.sending')}
+              >
+                {t('contact.form.submit')}
+              </button>
+            </form>
+          </FadeIn>
+          
+          <!-- Contact Info -->
+          <FadeIn delay={200}>
+            <div class="lg:pl-12 space-y-12">
+              <div class="space-y-4">
+                <h3 class="text-sm uppercase tracking-widest font-medium">{t('contact.info.touch')}</h3>
+                <div class="space-y-2">
+                  <a 
+                    href="tel:+34644961876" 
+                    class="block text-muted hover:text-foreground transition-colors"
+                  >
+                    +34 644 961 876
+                  </a>
+                </div>
+              </div>
+              
+              <div class="space-y-4">
+                <h3 class="text-sm uppercase tracking-widest font-medium">{t('contact.info.follow')}</h3>
+                <div class="space-y-2">
+                  <a 
+                    href="https://www.instagram.com/lateliertimelessdesserts/" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block text-muted hover:text-foreground transition-colors"
+                  >
+                    @lateliertimelessdesserts
+                  </a>
+                </div>
+              </div>
+              
+              <div class="space-y-4">
+                <h3 class="text-sm uppercase tracking-widest font-medium">{t('contact.info.location')}</h3>
+                <p class="text-muted">
+                  Torrox Park, Málaga<br />
+                  Costa del Sol, Spain
+                </p>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Base>
+
+<script>
+  const form = document.querySelector('[data-contact-form]') as HTMLFormElement;
+  const submitButton = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+  const lang = form?.dataset.lang || 'en';
+  
+  // Localized messages
+  const messages: Record<string, { success: string; error: string }> = {
+    en: {
+      success: 'Thank you for your message! We will be in touch soon.',
+      error: 'Something went wrong. Please try again.',
+    },
+    es: {
+      success: '¡Gracias por tu mensaje! Nos pondremos en contacto pronto.',
+      error: 'Algo salió mal. Por favor, inténtalo de nuevo.',
+    },
+    fr: {
+      success: 'Merci pour votre message ! Nous vous contacterons bientôt.',
+      error: 'Une erreur s\'est produite. Veuillez réessayer.',
+    },
+  };
+  
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const originalText = submitButton.dataset.submitText || 'Send message';
+    const sendingText = submitButton.dataset.sendingText || 'Sending...';
+    
+    submitButton.disabled = true;
+    submitButton.textContent = sendingText;
+    
+    try {
+      const formData = new FormData(form);
+      
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        alert(messages[lang]?.success || messages.en.success);
+        form.reset();
+      } else {
+        alert(result.error || messages[lang]?.error || messages.en.error);
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      alert(messages[lang]?.error || messages.en.error);
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalText;
+    }
+  });
+</script>

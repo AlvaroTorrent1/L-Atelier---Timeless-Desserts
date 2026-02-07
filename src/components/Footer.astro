@@ -1,14 +1,19 @@
 ---
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '../i18n/utils';
+
 const currentYear = new Date().getFullYear();
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
 
 const socialLinks = [
   { href: 'https://www.instagram.com/lateliertimelessdesserts/', label: 'Instagram' },
 ];
 
 const navLinks = [
-  { href: '/about', label: 'About' },
-  { href: '/patisseries', label: 'Patisseries' },
-  { href: '/contact', label: 'Contact' },
+  { href: translatePath('/about'), label: t('nav.about') },
+  { href: translatePath('/patisseries'), label: t('nav.projects') },
+  { href: translatePath('/contact'), label: t('nav.contact') },
 ];
 ---
 
@@ -16,7 +21,7 @@ const navLinks = [
   <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
     <!-- Logo centered -->
     <div class="flex justify-center mb-12">
-      <a href="/" class="inline-block hover:opacity-80 transition-opacity">
+      <a href={translatePath('/')} class="inline-block hover:opacity-80 transition-opacity">
         <img 
           src="/logo-footer.svg" 
           alt="L'Atelier - Timeless Desserts" 

@@ -1,0 +1,158 @@
+---
+export const prerender = true;
+
+import Base from '../../../layouts/Base.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import FadeIn from '../../../components/FadeIn.astro';
+import { useTranslations, useTranslatedPath } from '../../../i18n/utils';
+
+import project1 from '../../../assets/images/project-1.svg';
+import project2 from '../../../assets/images/project-2.svg';
+import project3 from '../../../assets/images/project-3.svg';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'es' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as any);
+const translatePath = useTranslatedPath(lang as any);
+
+const creations = [
+  { 
+    titleKey: 'creation.wedding',
+    categoryKey: 'creation.wedding.cat',
+    slug: 'wedding-cakes', 
+    image: project1,
+    comingSoon: false 
+  },
+  { 
+    titleKey: 'creation.artisan',
+    categoryKey: 'creation.artisan.cat',
+    slug: 'artisan-pastries', 
+    image: project2,
+    comingSoon: false 
+  },
+  { 
+    titleKey: 'creation.celebration',
+    categoryKey: 'creation.celebration.cat',
+    slug: 'celebration-desserts', 
+    image: project3,
+    comingSoon: false 
+  },
+  { 
+    titleKey: 'patisseries.coming',
+    categoryKey: 'creation.seasonal.cat',
+    slug: 'coming-soon-1', 
+    image: project1,
+    comingSoon: true 
+  },
+  { 
+    titleKey: 'patisseries.coming',
+    categoryKey: 'creation.chocolate.cat',
+    slug: 'coming-soon-2', 
+    image: project2,
+    comingSoon: true 
+  },
+  { 
+    titleKey: 'patisseries.coming',
+    categoryKey: 'creation.petitfours.cat',
+    slug: 'coming-soon-3', 
+    image: project3,
+    comingSoon: true 
+  },
+];
+---
+
+<Base 
+  title={t('patisseries.page.title')} 
+  description={t('patisseries.page.description')}
+>
+  <Header />
+  
+  <main class="pt-24">
+    <!-- Hero -->
+    <section class="py-20 px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <FadeIn>
+          <h1 class="max-w-3xl">
+            {t('patisseries.hero')}
+          </h1>
+        </FadeIn>
+        <FadeIn delay={100}>
+          <p class="mt-6 text-muted max-w-2xl leading-relaxed">
+            {t('patisseries.hero.p')}
+          </p>
+        </FadeIn>
+      </div>
+    </section>
+    
+    <!-- Creations Grid -->
+    <section class="py-16 px-6 lg:px-8 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+          {creations.map((creation, index) => (
+            <FadeIn delay={index * 50}>
+              <article class="group">
+                {creation.comingSoon ? (
+                  <div class="relative aspect-[4/5] overflow-hidden bg-secondary flex items-center justify-center">
+                    <span class="text-sm uppercase tracking-widest text-muted">{t('patisseries.coming')}</span>
+                  </div>
+                ) : (
+                  <a href={translatePath(`/patisseries/${creation.slug}`)} class="block">
+                    <div class="relative aspect-[4/5] overflow-hidden bg-secondary">
+                      <img 
+                        src={creation.image.src}
+                        alt={t(creation.titleKey as any)}
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                      <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+                    </div>
+                  </a>
+                )}
+                <div class="mt-4 space-y-1">
+                  <h3 class="font-serif text-lg uppercase tracking-wide">
+                    {creation.comingSoon ? (
+                      <span class="text-muted">{t(creation.titleKey as any)}</span>
+                    ) : (
+                      <a href={translatePath(`/patisseries/${creation.slug}`)} class="hover:opacity-70 transition-opacity">
+                        {t(creation.titleKey as any)}
+                      </a>
+                    )}
+                  </h3>
+                  <p class="text-sm text-muted">{t(creation.categoryKey as any)}</p>
+                </div>
+              </article>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="py-32 px-6 lg:px-8 bg-secondary">
+      <div class="max-w-3xl mx-auto text-center">
+        <FadeIn>
+          <h2 class="mb-6 font-display">{t('patisseries.cta.title')}</h2>
+          <p class="text-muted mb-10 leading-relaxed">
+            {t('patisseries.cta.p')}
+          </p>
+          <a 
+            href={translatePath('/contact')} 
+            class="inline-block px-10 py-4 bg-accent text-white text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors"
+          >
+            {t('patisseries.cta.button')}
+          </a>
+        </FadeIn>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Base>

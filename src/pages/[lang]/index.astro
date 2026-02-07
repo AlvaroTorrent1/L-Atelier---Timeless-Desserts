@@ -7,14 +7,17 @@ import ParallaxImage from '../../components/ParallaxImage.astro';
 
 import { useTranslations, useTranslatedPath } from '../../i18n/utils';
 
-import heroImage from '../../assets/images/hero.png';
-import paintCans from '../../assets/images/paint-cans.png';
-import quoteBg from '../../assets/images/quote-bg.png';
-import materialsElitis from '../../assets/images/materials-elitis.jpg';
-import materialsFarrow from '../../assets/images/materials-farrow.jpg';
+// Same images as English version for consistency
+import heroImage from '../../assets/images/hero-tiramisu.jpg';
 import project1 from '../../assets/images/project-1.svg';
 import project2 from '../../assets/images/project-2.svg';
 import project3 from '../../assets/images/project-3.svg';
+
+// Using public folder images directly for tiramisu photos (same as English)
+const tiramisuAbout = '/WhatsApp Image 2026-02-07 at 12.10.08 (2).jpeg';
+const tiramisuQuote = '/WhatsApp Image 2026-02-07 at 12.10.08 (2).jpeg';
+const tiramisuIngredient1 = '/WhatsApp Image 2026-02-07 at 12.10.08 (1).jpeg';
+const tiramisuIngredient2 = '/WhatsApp Image 2026-02-07 at 12.10.07 (3).jpeg';
 
 export const prerender = true;
 
@@ -58,9 +61,9 @@ const featuredCreations = [
       <div class="relative z-10 text-center px-6 max-w-7xl mx-auto">
         <FadeIn>
           <img 
-            src="/hero-tagline.svg" 
-            alt="Passion - Tradition - Excellence" 
-            class="w-full mx-auto mb-10"
+            src="/logo-footer.svg" 
+            alt="L'Atelier - Timeless Desserts" 
+            class="w-72 md:w-96 mx-auto mb-10"
           />
         </FadeIn>
         
@@ -122,8 +125,8 @@ const featuredCreations = [
           <FadeIn delay={200}>
             <div class="aspect-[3/4] overflow-hidden">
               <img 
-                src={paintCans.src}
-                alt="Artisanal pastries and desserts"
+                src={tiramisuAbout}
+                alt="Artisanal tiramisu dessert"
                 class="w-full h-full object-cover"
                 loading="lazy"
               />
@@ -137,11 +140,17 @@ const featuredCreations = [
     <section class="relative py-32 lg:py-48">
       <div class="absolute inset-0">
         <img 
-          src={quoteBg.src}
-          alt="Every dessert tells a story"
+          src={tiramisuQuote}
+          alt="Handcrafted tiramisu"
           class="w-full h-full object-cover"
           loading="lazy"
         />
+        <div class="absolute inset-0 bg-primary/40"></div>
+      </div>
+      <div class="relative z-10 text-center">
+        <p class="font-serif text-3xl md:text-5xl text-white italic leading-relaxed">
+          "Every detail<br/>speaks your story."
+        </p>
       </div>
     </section>
     
@@ -210,14 +219,14 @@ const featuredCreations = [
           <FadeIn>
             <div class="group relative aspect-[3/4] overflow-hidden">
               <img 
-                src={materialsElitis.src}
-                alt="Premium French chocolate and cocoa"
+                src={tiramisuIngredient1}
+                alt="Tiramisu being served"
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div class="absolute bottom-6 left-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <p class="text-background text-sm uppercase tracking-widest">Valrhona Chocolate</p>
+                <p class="text-background text-sm uppercase tracking-widest">Italian Mascarpone</p>
               </div>
             </div>
           </FadeIn>
@@ -225,14 +234,14 @@ const featuredCreations = [
           <FadeIn delay={150}>
             <div class="group relative aspect-[3/4] overflow-hidden">
               <img 
-                src={materialsFarrow.src}
-                alt="Fresh seasonal fruits and berries"
+                src={tiramisuIngredient2}
+                alt="Fresh tiramisu layers"
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div class="absolute bottom-6 left-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <p class="text-background text-sm uppercase tracking-widest">Seasonal Fresh Fruits</p>
+                <p class="text-background text-sm uppercase tracking-widest">Cocoa Dusted Perfection</p>
               </div>
             </div>
           </FadeIn>
