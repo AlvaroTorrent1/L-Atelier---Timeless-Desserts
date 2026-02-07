@@ -7,9 +7,10 @@ import Footer from '../../components/Footer.astro';
 import FadeIn from '../../components/FadeIn.astro';
 import ParallaxImage from '../../components/ParallaxImage.astro';
 
-import project1 from '../../assets/images/project-1.svg';
-import project2 from '../../assets/images/project-2.svg';
-import project3 from '../../assets/images/project-3.svg';
+// Real product photos from public folder
+const creationImage1 = '/WhatsApp Image 2026-02-07 at 17.25.24 (5).jpeg';
+const creationImage2 = '/WhatsApp Image 2026-02-07 at 17.25.25.jpeg';
+const creationImage3 = '/WhatsApp Image 2026-02-07 at 12.10.07.jpeg';
 
 // Static paths for SSG
 export function getStaticPaths() {
@@ -29,7 +30,7 @@ const creationsData: Record<string, {
   style: string;
   availability: string;
   description: string;
-  images: typeof project1[];
+  images: string[];
 }> = {
   'wedding-cakes': {
     title: 'Wedding Cakes',
@@ -37,7 +38,7 @@ const creationsData: Record<string, {
     style: 'Classic & Modern',
     availability: 'By appointment',
     description: 'Our wedding cakes are crafted with meticulous attention to detail, combining traditional French techniques with contemporary design. Each cake is a unique creation, designed to reflect your love story and complement your special day perfectly.',
-    images: [project1, project2, project3],
+    images: [creationImage1, creationImage2, creationImage3],
   },
   'artisan-pastries': {
     title: 'Artisan Pastries',
@@ -45,7 +46,7 @@ const creationsData: Record<string, {
     style: 'French Traditional',
     availability: 'Daily fresh',
     description: 'From buttery croissants to delicate éclairs, our artisan pastries celebrate the timeless traditions of French baking. Made fresh each day with premium ingredients, these classics bring the essence of a Parisian patisserie to Málaga.',
-    images: [project2, project3, project1],
+    images: [creationImage2, creationImage3, creationImage1],
   },
   'celebration-desserts': {
     title: 'Celebration Desserts',
@@ -53,7 +54,7 @@ const creationsData: Record<string, {
     style: 'Custom Design',
     availability: '48h advance order',
     description: 'Whether it\'s a birthday, anniversary, or special gathering, our celebration desserts are designed to make your moment unforgettable. From elegant entremets to whimsical themed creations, we bring your vision to life with artistry and flavor.',
-    images: [project3, project1, project2],
+    images: [creationImage3, creationImage1, creationImage2],
   },
 };
 
@@ -110,11 +111,11 @@ if (!creation) {
       <div class="max-w-7xl mx-auto">
         <FadeIn>
           <div class="aspect-[16/9] overflow-hidden">
-            <ParallaxImage 
-              src={creation.images[0]} 
+            <img 
+              src={creation.images[0]}
               alt={creation.title}
-              class="h-full"
-              speed={0.15}
+              class="w-full h-full object-cover"
+              loading="eager"
             />
           </div>
         </FadeIn>
@@ -142,7 +143,7 @@ if (!creation) {
             <FadeIn delay={index * 100}>
               <div class="aspect-[4/3] overflow-hidden">
                 <img 
-                  src={image.src}
+                  src={image}
                   alt={`${creation.title} - Image ${index + 2}`}
                   class="w-full h-full object-cover"
                   loading="lazy"

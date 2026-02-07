@@ -7,13 +7,13 @@ import ParallaxImage from '../../components/ParallaxImage.astro';
 
 import { useTranslations, useTranslatedPath } from '../../i18n/utils';
 
-// Same images as English version for consistency
 import heroImage from '../../assets/images/hero-tiramisu.jpg';
-import project1 from '../../assets/images/project-1.svg';
-import project2 from '../../assets/images/project-2.svg';
-import project3 from '../../assets/images/project-3.svg';
 
-// Using public folder images directly for tiramisu photos (same as English)
+// Real product photos from public folder
+const creationImage1 = '/WhatsApp Image 2026-02-07 at 17.25.24 (5).jpeg';
+const creationImage2 = '/WhatsApp Image 2026-02-07 at 17.25.25.jpeg';
+const creationImage3 = '/WhatsApp Image 2026-02-07 at 12.10.07.jpeg';
+
 const tiramisuAbout = '/WhatsApp Image 2026-02-07 at 17.25.23 (1).jpeg';
 const tiramisuQuote = '/WhatsApp Image 2026-02-07 at 12.10.08 (2).jpeg';
 const tiramisuIngredient1 = '/WhatsApp Image 2026-02-07 at 12.10.08 (1).jpeg';
@@ -34,9 +34,9 @@ const t = useTranslations(lang as any);
 const translatePath = useTranslatedPath(lang as any);
 
 const featuredCreations = [
-  { title: 'Wedding Cakes', category: 'custom, celebration', slug: 'wedding-cakes', image: project1 },
-  { title: 'Artisan Pastries', category: 'daily, french classics', slug: 'artisan-pastries', image: project2 },
-  { title: 'Celebration Desserts', category: 'events, birthdays', slug: 'celebration-desserts', image: project3 },
+  { title: 'Wedding Cakes', category: 'custom, celebration', slug: 'wedding-cakes', image: creationImage1 },
+  { title: 'Artisan Pastries', category: 'daily, french classics', slug: 'artisan-pastries', image: creationImage2 },
+  { title: 'Celebration Desserts', category: 'events, birthdays', slug: 'celebration-desserts', image: creationImage3 },
 ];
 ---
 
@@ -170,7 +170,7 @@ const featuredCreations = [
                 <a href={translatePath(`/patisseries/${creation.slug}`)} class="block">
                   <div class="relative aspect-[4/5] overflow-hidden bg-secondary">
                     <img 
-                      src={creation.image.src}
+                      src={creation.image}
                       alt={creation.title}
                       class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       loading="lazy"

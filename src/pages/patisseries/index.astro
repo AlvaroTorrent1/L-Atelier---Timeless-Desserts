@@ -6,51 +6,52 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import FadeIn from '../../components/FadeIn.astro';
 
-import project1 from '../../assets/images/project-1.svg';
-import project2 from '../../assets/images/project-2.svg';
-import project3 from '../../assets/images/project-3.svg';
+// Real product photos from public folder
+const creationImage1 = '/WhatsApp Image 2026-02-07 at 17.25.24 (5).jpeg';
+const creationImage2 = '/WhatsApp Image 2026-02-07 at 17.25.25.jpeg';
+const creationImage3 = '/WhatsApp Image 2026-02-07 at 12.10.07.jpeg';
 
 const creations = [
   { 
     title: 'Wedding Cakes', 
     category: 'custom, celebration', 
     slug: 'wedding-cakes', 
-    image: project1,
+    image: creationImage1,
     comingSoon: false 
   },
   { 
     title: 'Artisan Pastries', 
     category: 'daily, french classics', 
     slug: 'artisan-pastries', 
-    image: project2,
+    image: creationImage2,
     comingSoon: false 
   },
   { 
     title: 'Celebration Desserts', 
     category: 'events, birthdays', 
     slug: 'celebration-desserts', 
-    image: project3,
+    image: creationImage3,
     comingSoon: false 
   },
   { 
     title: 'Coming Soon', 
     category: 'seasonal specialties', 
     slug: 'coming-soon-1', 
-    image: project1,
+    image: creationImage1,
     comingSoon: true 
   },
   { 
     title: 'Coming Soon', 
     category: 'chocolate collection', 
     slug: 'coming-soon-2', 
-    image: project2,
+    image: creationImage2,
     comingSoon: true 
   },
   { 
     title: 'Coming Soon', 
     category: 'petit fours', 
     slug: 'coming-soon-3', 
-    image: project3,
+    image: creationImage3,
     comingSoon: true 
   },
 ];
@@ -95,7 +96,7 @@ const creations = [
                   <a href={`/patisseries/${creation.slug}`} class="block">
                     <div class="relative aspect-[4/5] overflow-hidden bg-secondary">
                       <img 
-                        src={creation.image.src}
+                        src={creation.image}
                         alt={creation.title}
                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         loading="lazy"

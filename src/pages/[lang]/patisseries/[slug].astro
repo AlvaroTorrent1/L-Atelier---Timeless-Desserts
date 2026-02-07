@@ -8,9 +8,10 @@ import FadeIn from '../../../components/FadeIn.astro';
 import ParallaxImage from '../../../components/ParallaxImage.astro';
 import { useTranslations, useTranslatedPath } from '../../../i18n/utils';
 
-import project1 from '../../../assets/images/project-1.svg';
-import project2 from '../../../assets/images/project-2.svg';
-import project3 from '../../../assets/images/project-3.svg';
+// Real product photos from public folder
+const creationImage1 = '/WhatsApp Image 2026-02-07 at 17.25.24 (5).jpeg';
+const creationImage2 = '/WhatsApp Image 2026-02-07 at 17.25.25.jpeg';
+const creationImage3 = '/WhatsApp Image 2026-02-07 at 12.10.07.jpeg';
 
 // Static paths for SSG - all language/slug combinations
 export function getStaticPaths() {
@@ -33,7 +34,7 @@ type CreationData = {
   styleKey: string;
   availabilityKey: string;
   descriptionKey: string;
-  images: typeof project1[];
+  images: string[];
 };
 
 const creationsData: Record<string, CreationData> = {
@@ -43,7 +44,7 @@ const creationsData: Record<string, CreationData> = {
     styleKey: 'creation.wedding.style',
     availabilityKey: 'creation.wedding.availability',
     descriptionKey: 'creation.wedding.description',
-    images: [project1, project2, project3],
+    images: [creationImage1, creationImage2, creationImage3],
   },
   'artisan-pastries': {
     titleKey: 'creation.artisan',
@@ -51,7 +52,7 @@ const creationsData: Record<string, CreationData> = {
     styleKey: 'creation.artisan.style',
     availabilityKey: 'creation.artisan.availability',
     descriptionKey: 'creation.artisan.description',
-    images: [project2, project3, project1],
+    images: [creationImage2, creationImage3, creationImage1],
   },
   'celebration-desserts': {
     titleKey: 'creation.celebration',
@@ -59,7 +60,7 @@ const creationsData: Record<string, CreationData> = {
     styleKey: 'creation.celebration.style',
     availabilityKey: 'creation.celebration.availability',
     descriptionKey: 'creation.celebration.description',
-    images: [project3, project1, project2],
+    images: [creationImage3, creationImage1, creationImage2],
   },
 };
 
@@ -122,11 +123,11 @@ const description = t(creation.descriptionKey as any);
       <div class="max-w-7xl mx-auto">
         <FadeIn>
           <div class="aspect-[16/9] overflow-hidden">
-            <ParallaxImage 
-              src={creation.images[0]} 
+            <img 
+              src={creation.images[0]}
               alt={title}
-              class="h-full"
-              speed={0.15}
+              class="w-full h-full object-cover"
+              loading="eager"
             />
           </div>
         </FadeIn>
@@ -154,7 +155,7 @@ const description = t(creation.descriptionKey as any);
             <FadeIn delay={index * 100}>
               <div class="aspect-[4/3] overflow-hidden">
                 <img 
-                  src={image.src}
+                  src={image}
                   alt={`${title} - Image ${index + 2}`}
                   class="w-full h-full object-cover"
                   loading="lazy"
