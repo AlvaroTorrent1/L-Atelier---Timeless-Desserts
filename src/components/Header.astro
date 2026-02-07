@@ -80,37 +80,50 @@ function isActive(href: string): boolean {
       </div>
     </button>
   </nav>
-  
-  <!-- Mobile Menu -->
-  <div 
-    class="md:hidden fixed inset-0 bg-background z-40 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300"
-    data-mobile-menu
+</header>
+
+<!-- Mobile Menu (outside header to avoid stacking context issues) -->
+<div 
+  class="md:hidden fixed inset-0 bg-background z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300"
+  data-mobile-menu
+>
+  <!-- Close button inside mobile menu -->
+  <button 
+    class="absolute top-6 right-6 p-2"
+    aria-label="Close menu"
+    data-menu-close
   >
-    <div class="flex flex-col items-center gap-12">
-      <ul class="flex flex-col items-center gap-8">
-        {navItems.map(({ href, label }) => (
-          <li>
-            <a 
-              href={href}
-              class="text-2xl font-serif tracking-wide"
-            >
-              {label}
-            </a>
-          </li>
-        ))}
-      </ul>
-      
-      <div class="pt-8 border-t border-primary/10 w-full flex justify-center">
-        <LanguageSelector />
-      </div>
+    <div class="w-6 h-6 relative">
+      <span class="absolute top-1/2 left-0 w-full h-px bg-current transform rotate-45"></span>
+      <span class="absolute top-1/2 left-0 w-full h-px bg-current transform -rotate-45"></span>
+    </div>
+  </button>
+
+  <div class="flex flex-col items-center gap-12">
+    <ul class="flex flex-col items-center gap-8">
+      {navItems.map(({ href, label }) => (
+        <li>
+          <a 
+            href={href}
+            class="text-2xl font-serif tracking-wide"
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    
+    <div class="pt-8 border-t border-primary/10 w-full flex justify-center">
+      <LanguageSelector />
     </div>
   </div>
-</header>
+</div>
 
 <script>
   function initHeader() {
     const header = document.querySelector('[data-header]') as HTMLElement;
     const menuToggle = document.querySelector('[data-menu-toggle]') as HTMLButtonElement;
+    const menuClose = document.querySelector('[data-menu-close]') as HTMLButtonElement;
     const mobileMenu = document.querySelector('[data-mobile-menu]') as HTMLElement;
     const menuIcon = document.querySelector('[data-menu-icon]') as HTMLElement;
     
@@ -118,31 +131,33 @@ function isActive(href: string): boolean {
 
     let isMenuOpen = false;
     
+    function openMenu() {
+      isMenuOpen = true;
+      mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+      mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+      menuIcon.classList.add('menu-open');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeMenu() {
+      isMenuOpen = false;
+      mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+      mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+      menuIcon.classList.remove('menu-open');
+      document.body.style.overflow = '';
+    }
+    
     // Toggle mobile menu
-    menuToggle?.addEventListener('click', () => {
-      isMenuOpen = !isMenuOpen;
-      
-      if (isMenuOpen) {
-        mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
-        mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
-        menuIcon.classList.add('menu-open');
-        document.body.style.overflow = 'hidden';
-      } else {
-        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-        mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
-        menuIcon.classList.remove('menu-open');
-        document.body.style.overflow = '';
-      }
+    menuToggle.addEventListener('click', () => {
+      isMenuOpen ? closeMenu() : openMenu();
     });
     
+    // Close button inside menu
+    menuClose?.addEventListener('click', closeMenu);
+    
     // Close menu on link click
-    mobileMenu?.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-        menuIcon.classList.remove('menu-open');
-        document.body.style.overflow = '';
-        isMenuOpen = false;
-      });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
     });
     
     // Header background on scroll
