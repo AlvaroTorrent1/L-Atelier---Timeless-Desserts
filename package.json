@@ -1,0 +1,19 @@
+{
+  "name": "elske-lena",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/vercel": "^9.0.4",
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.17.1",
+    "resend": "^6.9.1",
+    "tailwindcss": "^4.1.18"
+  }
+}

@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+/* Rigot Font - Premium display font for branding elements */
+/* Note: Place Rigot-Regular.woff2 and Rigot-Regular.woff in /public/fonts/ */
+@font-face {
+  font-family: 'Rigot';
+  src: url('/fonts/Rigot-Regular.woff2') format('woff2'),
+       url('/fonts/Rigot-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Balgin Condensed - Display font for hero headlines */
+/* Note: Place Balgin-Condensed.woff2 and Balgin-Condensed.woff in /public/fonts/ */
+@font-face {
+  font-family: 'Balgin Condensed';
+  src: url('/fonts/Balgin-Condensed.woff2') format('woff2'),
+       url('/fonts/Balgin-Condensed.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Custom theme configuration */
+@theme {
+  /* Colors - L'Atelier Brand palette */
+  --color-primary: #492819;      /* Marron foncé - text, dark elements */
+  --color-secondary: #f1f0ef;    /* Gris clair - section backgrounds */
+  --color-accent: #d4aa8b;       /* Orange grisé - buttons, links, brand */
+  --color-accent-light: #a8a799; /* Jaune grisé - highlights */
+  --color-accent-warm: #d4aa8b;  /* Orange grisé - hover states */
+  --color-muted: #a8a799;        /* Jaune grisé - secondary text */
+  --color-background: #ebe9d6;   /* Jaune clair - main background */
+  --color-foreground: #492819;   /* Marron foncé - text color */
+  --color-white: #ffffff;
+  
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-display: 'Rigot', 'Cormorant Garamond', Georgia, serif;
+  --font-hero: 'Balgin Condensed', 'Arial Narrow', sans-serif;
+  
+  /* Spacing */
+  --spacing-section: 8rem;
+  --spacing-container: 2rem;
+  
+  /* Transitions */
+  --transition-smooth: 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition-fast: 0.2s ease-out;
+}
+
+/* Base styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    line-height: 1.6;
+  }
+  
+  /* Typography scale */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  
+  /* Use Rigot for main headlines */
+  h1 { 
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4rem); 
+  }
+  h2 { font-size: clamp(2rem, 4vw, 3rem); }
+  h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+  
+  /* Links */
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+  }
+  
+  a:hover {
+    opacity: 0.7;
+  }
+  
+  /* Images */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+/* Utility classes for animations */
+@layer utilities {
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .parallax {
+    will-change: transform;
+  }
+  
+  /* Rigot display font for branding elements */
+  .font-display {
+    font-family: var(--font-display);
+  }
+  
+  /* Balgin Condensed for hero headlines */
+  .font-hero {
+    font-family: var(--font-hero);
+  }
+}
+
+/* View Transitions (for page transitions) */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+}

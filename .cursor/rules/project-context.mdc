@@ -1,0 +1,115 @@
+---
+description: L'Atelier Timeless Desserts - project context and conventions
+alwaysApply: true
+---
+
+# L'Atelier - Timeless Desserts
+
+Artisanal French patisserie website showcasing handcrafted desserts. Emphasis on timeless quality, subtle animations, and fast performance.
+
+## Tech Stack
+
+- **Framework**: Astro 5.x (static HTML generation, 0 JS by default)
+- **Language**: TypeScript (strict mode)
+- **Styling**: Tailwind CSS 4.x (utility-first)
+- **Image Optimization**: astro:assets + Sharp (WebP/AVIF, responsive srcset)
+- **Animations**: Native CSS + Intersection Observer (fade-in, parallax)
+- **Fonts**: Inter (body), Cormorant Garamond (headings), Rigot (display/branding)
+- **Deployment**: Vercel (Edge CDN)
+
+## Brand Color Palette
+
+| Color | Hex | Usage |
+|-------|-----|-------|
+| Primary | `#492819` | Marron foncé - Text, dark elements |
+| Accent | `#d4aa8b` | Orange grisé - Buttons, links, brand |
+| Accent Light | `#a8a799` | Jaune grisé - Highlights |
+| Accent Warm | `#d4aa8b` | Orange grisé - Hover states |
+| Secondary | `#f1f0ef` | Gris clair - Section backgrounds |
+| Background | `#ebe9d6` | Jaune clair - Main page background |
+| White | `#ffffff` | Contrast sections |
+| Muted | `#a8a799` | Jaune grisé - Secondary text |
+
+## Project Structure
+
+```
+src/
+├── assets/images/     # Optimized images (processed by Astro)
+├── components/        # Reusable Astro components
+│   ├── Header.astro
+│   ├── Footer.astro
+│   ├── FadeIn.astro
+│   ├── ParallaxImage.astro
+│   └── LanguageSelector.astro
+├── i18n/              # Internationalization (EN/ES/FR)
+│   ├── ui.ts
+│   └── utils.ts
+├── layouts/
+│   └── Base.astro     # Main layout with SEO, fonts, meta
+├── pages/
+│   ├── index.astro
+│   ├── about.astro
+│   ├── contact.astro
+│   └── patisseries/
+│       ├── index.astro
+│       └── [slug].astro
+└── styles/
+    └── global.css     # Tailwind + theme variables + Rigot font
+public/
+├── logo.svg           # Header logo
+├── logo-footer.svg    # Footer logo with tagline
+├── hero-tagline.svg   # Hero section tagline
+└── fonts/             # Custom Rigot font files
+```
+
+## Key Commands
+
+```bash
+npm run dev       # Development server (localhost:4321)
+npm run build     # Production build
+npm run preview   # Preview production build
+npm run typecheck # TypeScript validation
+```
+
+## Contact Information
+
+- **Owner**: Claire Thomas
+- **Phone**: +34 644 961 876
+- **Location**: Torrox Park, Málaga
+- **Instagram**: https://www.instagram.com/lateliertimelessdesserts/
+
+## Design Conventions
+
+- **Typography**: Rigot for h1 and branding, Cormorant Garamond for h2-h6
+- **Buttons**: Accent (`bg-accent text-white`) with 90% opacity hover
+- **Links**: Accent text with warm hover (`text-accent hover:text-accent-warm`)
+- **Sections**: Alternate between beige background and white for visual rhythm
+- **CTA Sections**: Use `bg-secondary` (gris clair) background
+- **Footer**: Secondary background with accent borders
+
+## File Naming
+
+- **Components**: PascalCase (`Header.astro`)
+- **Pages**: kebab-case (`about.astro`)
+- **Images**: kebab-case (`wedding-cake.jpg`)
+- **CSS**: global.css for theme, scoped styles in components
+
+## Performance Optimizations
+
+- Images auto-converted to WebP/AVIF via Sharp
+- Critical CSS inlined
+- Fonts preloaded (Inter, Cormorant Garamond)
+- Lazy loading for below-fold images
+- View Transitions API for smooth navigation
+
+## Internationalization
+
+- **Languages**: English (default), Spanish, French
+- **Config**: `src/i18n/ui.ts` for translations
+- **Routing**: Prefix for non-default locales (/es/, /fr/)
+
+## Repository
+
+- **GitHub**: https://github.com/AlvaroTorrent1/L-Atelier---Timeless-Desserts.git
+- **Branch**: main
+- **Deployment**: Auto-deploy on push via Vercel

@@ -1,0 +1,147 @@
+---
+export const prerender = true;
+
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FadeIn from '../components/FadeIn.astro';
+import { Image } from 'astro:assets';
+
+import aboutImage from '../assets/images/about.svg';
+---
+
+<Base 
+  title="About — L'Atelier" 
+  description="Learn about Claire Thomas and her passion for crafting timeless French desserts."
+>
+  <Header />
+  
+  <main class="pt-24">
+    <!-- Hero -->
+    <section class="py-20 px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <FadeIn>
+          <h1 class="max-w-3xl">
+            we create desserts that feel timeless, delightful, and deeply personal
+          </h1>
+        </FadeIn>
+      </div>
+    </section>
+    
+    <!-- About Content -->
+    <section class="py-16 px-6 lg:px-8 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+          <!-- Image -->
+          <FadeIn>
+            <div class="aspect-[3/4] overflow-hidden">
+              <Image
+                src={aboutImage}
+                alt="Claire Thomas - L'Atelier Founder"
+                class="w-full h-full object-cover"
+                loading="eager"
+              />
+            </div>
+          </FadeIn>
+          
+          <!-- Content -->
+          <div class="lg:py-12">
+            <FadeIn delay={100}>
+              <div class="space-y-8">
+                <div class="space-y-4">
+                  <h2 class="text-2xl font-display">our philosophy</h2>
+                  <p class="text-muted leading-relaxed">
+                    At L'Atelier, we believe in the art of French patisserie. Every 
+                    dessert begins with understanding—not just what you want to celebrate, 
+                    but what will make that moment truly special.
+                  </p>
+                  <p class="text-muted leading-relaxed">
+                    Founded by Claire Thomas, we work with clients who appreciate quality, 
+                    creativity, and the magic of handcrafted desserts. Our role is to 
+                    transform your vision into edible art, ensuring every detail is 
+                    perfectly executed.
+                  </p>
+                </div>
+                
+                <div class="space-y-4">
+                  <h2 class="text-2xl font-display">our approach</h2>
+                  <p class="text-muted leading-relaxed">
+                    We don't believe in rushing. Great pastry takes time, attention, and care. 
+                    That's why we limit the number of orders we take on, allowing us to 
+                    give each creation the dedication it deserves.
+                  </p>
+                  <p class="text-muted leading-relaxed">
+                    From initial consultation to final presentation, we handle every aspect 
+                    of your order with precision and artistry. The result? Desserts that 
+                    not only look exceptional but taste unforgettable.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Values -->
+    <section class="py-32 px-6 lg:px-8 bg-secondary">
+      <div class="max-w-7xl mx-auto">
+        <FadeIn>
+          <h2 class="text-center mb-16 font-display">what we value</h2>
+        </FadeIn>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <FadeIn delay={0}>
+            <div class="text-center space-y-4">
+              <h3 class="font-serif text-xl text-accent">passion for craft</h3>
+              <p class="text-sm text-muted leading-relaxed">
+                We take on fewer orders to ensure each creation receives our full attention 
+                and artistic dedication.
+              </p>
+            </div>
+          </FadeIn>
+          
+          <FadeIn delay={100}>
+            <div class="text-center space-y-4">
+              <h3 class="font-serif text-xl text-accent">timeless traditions</h3>
+              <p class="text-sm text-muted leading-relaxed">
+                We honor classic French techniques while adding our own creative touch, 
+                creating desserts that transcend trends.
+              </p>
+            </div>
+          </FadeIn>
+          
+          <FadeIn delay={200}>
+            <div class="text-center space-y-4">
+              <h3 class="font-serif text-xl text-accent">exceptional ingredients</h3>
+              <p class="text-sm text-muted leading-relaxed">
+                We source only the finest ingredients, believing that great pastry 
+                starts with quality and freshness.
+              </p>
+            </div>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="py-32 px-6 lg:px-8 bg-white">
+      <div class="max-w-3xl mx-auto text-center">
+        <FadeIn>
+          <h2 class="mb-6 font-display">let's create together</h2>
+          <p class="text-muted mb-10 leading-relaxed">
+            Ready to make your celebration unforgettable? We'd love to hear from you.
+          </p>
+          <a 
+            href="/contact" 
+            class="inline-block px-10 py-4 bg-accent text-white text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors"
+          >
+            Place an order
+          </a>
+        </FadeIn>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Base>

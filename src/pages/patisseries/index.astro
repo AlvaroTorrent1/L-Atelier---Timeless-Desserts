@@ -1,0 +1,147 @@
+---
+export const prerender = true;
+
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FadeIn from '../../components/FadeIn.astro';
+
+import project1 from '../../assets/images/project-1.svg';
+import project2 from '../../assets/images/project-2.svg';
+import project3 from '../../assets/images/project-3.svg';
+
+const creations = [
+  { 
+    title: 'Wedding Cakes', 
+    category: 'custom, celebration', 
+    slug: 'wedding-cakes', 
+    image: project1,
+    comingSoon: false 
+  },
+  { 
+    title: 'Artisan Pastries', 
+    category: 'daily, french classics', 
+    slug: 'artisan-pastries', 
+    image: project2,
+    comingSoon: false 
+  },
+  { 
+    title: 'Celebration Desserts', 
+    category: 'events, birthdays', 
+    slug: 'celebration-desserts', 
+    image: project3,
+    comingSoon: false 
+  },
+  { 
+    title: 'Coming Soon', 
+    category: 'seasonal specialties', 
+    slug: 'coming-soon-1', 
+    image: project1,
+    comingSoon: true 
+  },
+  { 
+    title: 'Coming Soon', 
+    category: 'chocolate collection', 
+    slug: 'coming-soon-2', 
+    image: project2,
+    comingSoon: true 
+  },
+  { 
+    title: 'Coming Soon', 
+    category: 'petit fours', 
+    slug: 'coming-soon-3', 
+    image: project3,
+    comingSoon: true 
+  },
+];
+---
+
+<Base 
+  title="Patisseries — L'Atelier" 
+  description="Explore our collection of artisanal French pastries and custom desserts."
+>
+  <Header />
+  
+  <main class="pt-24">
+    <!-- Hero -->
+    <section class="py-20 px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <FadeIn>
+          <h1 class="max-w-3xl">
+            our creations
+          </h1>
+        </FadeIn>
+        <FadeIn delay={100}>
+          <p class="mt-6 text-muted max-w-2xl leading-relaxed">
+            Each creation reflects our commitment to timeless quality, artisanal craftsmanship, 
+            and the joy of French patisserie that transforms moments into memories.
+          </p>
+        </FadeIn>
+      </div>
+    </section>
+    
+    <!-- Creations Grid -->
+    <section class="py-16 px-6 lg:px-8 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+          {creations.map((creation, index) => (
+            <FadeIn delay={index * 50}>
+              <article class="group">
+                {creation.comingSoon ? (
+                  <div class="relative aspect-[4/5] overflow-hidden bg-secondary flex items-center justify-center">
+                    <span class="text-sm uppercase tracking-widest text-muted">Coming Soon</span>
+                  </div>
+                ) : (
+                  <a href={`/patisseries/${creation.slug}`} class="block">
+                    <div class="relative aspect-[4/5] overflow-hidden bg-secondary">
+                      <img 
+                        src={creation.image.src}
+                        alt={creation.title}
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                      <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+                    </div>
+                  </a>
+                )}
+                <div class="mt-4 space-y-1">
+                  <h3 class="font-serif text-lg uppercase tracking-wide">
+                    {creation.comingSoon ? (
+                      <span class="text-muted">{creation.title}</span>
+                    ) : (
+                      <a href={`/patisseries/${creation.slug}`} class="hover:opacity-70 transition-opacity">
+                        {creation.title}
+                      </a>
+                    )}
+                  </h3>
+                  <p class="text-sm text-muted">{creation.category}</p>
+                </div>
+              </article>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="py-32 px-6 lg:px-8 bg-secondary">
+      <div class="max-w-3xl mx-auto text-center">
+        <FadeIn>
+          <h2 class="mb-6 font-display">have a special occasion in mind?</h2>
+          <p class="text-muted mb-10 leading-relaxed">
+            We'd love to hear about your celebration. Let's discuss how we can create 
+            the perfect dessert for your special moment.
+          </p>
+          <a 
+            href="/contact" 
+            class="inline-block px-10 py-4 bg-accent text-white text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors"
+          >
+            Get in touch
+          </a>
+        </FadeIn>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Base>

@@ -1,0 +1,179 @@
+---
+export const prerender = true;
+
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FadeIn from '../../components/FadeIn.astro';
+import ParallaxImage from '../../components/ParallaxImage.astro';
+
+import project1 from '../../assets/images/project-1.svg';
+import project2 from '../../assets/images/project-2.svg';
+import project3 from '../../assets/images/project-3.svg';
+
+// Static paths for SSG
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'wedding-cakes' } },
+    { params: { slug: 'artisan-pastries' } },
+    { params: { slug: 'celebration-desserts' } },
+  ];
+}
+
+const { slug } = Astro.params;
+
+// Creation data (in a real app, this would come from a CMS or content collection)
+const creationsData: Record<string, {
+  title: string;
+  category: string;
+  style: string;
+  availability: string;
+  description: string;
+  images: typeof project1[];
+}> = {
+  'wedding-cakes': {
+    title: 'Wedding Cakes',
+    category: 'Custom Celebration',
+    style: 'Classic & Modern',
+    availability: 'By appointment',
+    description: 'Our wedding cakes are crafted with meticulous attention to detail, combining traditional French techniques with contemporary design. Each cake is a unique creation, designed to reflect your love story and complement your special day perfectly.',
+    images: [project1, project2, project3],
+  },
+  'artisan-pastries': {
+    title: 'Artisan Pastries',
+    category: 'Daily Classics',
+    style: 'French Traditional',
+    availability: 'Daily fresh',
+    description: 'From buttery croissants to delicate éclairs, our artisan pastries celebrate the timeless traditions of French baking. Made fresh each day with premium ingredients, these classics bring the essence of a Parisian patisserie to Málaga.',
+    images: [project2, project3, project1],
+  },
+  'celebration-desserts': {
+    title: 'Celebration Desserts',
+    category: 'Events & Birthdays',
+    style: 'Custom Design',
+    availability: '48h advance order',
+    description: 'Whether it\'s a birthday, anniversary, or special gathering, our celebration desserts are designed to make your moment unforgettable. From elegant entremets to whimsical themed creations, we bring your vision to life with artistry and flavor.',
+    images: [project3, project1, project2],
+  },
+};
+
+const creation = creationsData[slug as string];
+
+if (!creation) {
+  return Astro.redirect('/patisseries');
+}
+---
+
+<Base 
+  title={`${creation.title} — L'Atelier`}
+  description={creation.description}
+>
+  <Header />
+  
+  <main class="pt-24">
+    <!-- Hero -->
+    <section class="py-20 px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <FadeIn>
+          <nav class="mb-8">
+            <a href="/patisseries" class="text-sm text-muted hover:text-foreground transition-colors">
+              ← Back to creations
+            </a>
+          </nav>
+        </FadeIn>
+        
+        <FadeIn delay={100}>
+          <h1 class="uppercase tracking-wide">{creation.title}</h1>
+        </FadeIn>
+        
+        <FadeIn delay={200}>
+          <div class="mt-8 flex flex-wrap gap-8 text-sm text-muted">
+            <div>
+              <span class="block text-xs uppercase tracking-widest mb-1">Category</span>
+              <span>{creation.category}</span>
+            </div>
+            <div>
+              <span class="block text-xs uppercase tracking-widest mb-1">Style</span>
+              <span>{creation.style}</span>
+            </div>
+            <div>
+              <span class="block text-xs uppercase tracking-widest mb-1">Availability</span>
+              <span>{creation.availability}</span>
+            </div>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+    
+    <!-- Main Image -->
+    <section class="px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <FadeIn>
+          <div class="aspect-[16/9] overflow-hidden">
+            <ParallaxImage 
+              src={creation.images[0]} 
+              alt={creation.title}
+              class="h-full"
+              speed={0.15}
+            />
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+    
+    <!-- Description -->
+    <section class="py-20 px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="max-w-2xl">
+          <FadeIn>
+            <p class="text-lg leading-relaxed text-muted">
+              {creation.description}
+            </p>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Gallery -->
+    <section class="py-8 px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {creation.images.slice(1).map((image, index) => (
+            <FadeIn delay={index * 100}>
+              <div class="aspect-[4/3] overflow-hidden">
+                <img 
+                  src={image.src}
+                  alt={`${creation.title} - Image ${index + 2}`}
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+    
+    <!-- Navigation -->
+    <section class="py-20 px-6 lg:px-8 border-t border-primary/10">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex justify-between items-center">
+          <a 
+            href="/patisseries" 
+            class="text-sm uppercase tracking-widest hover:opacity-70 transition-opacity"
+          >
+            ← All creations
+          </a>
+          <a 
+            href="/contact" 
+            class="text-sm uppercase tracking-widest hover:opacity-70 transition-opacity"
+          >
+            Place an order →
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Base>

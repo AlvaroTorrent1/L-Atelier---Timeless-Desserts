@@ -1,0 +1,195 @@
+---
+export const prerender = true;
+
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FadeIn from '../components/FadeIn.astro';
+---
+
+<Base 
+  title="Contact — L'Atelier" 
+  description="Get in touch with us to discuss your custom dessert orders."
+>
+  <Header />
+  
+  <main class="pt-24">
+    <!-- Hero -->
+    <section class="py-20 px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <FadeIn>
+          <h1 class="max-w-3xl">
+            let's create something delicious together
+          </h1>
+        </FadeIn>
+        <FadeIn delay={100}>
+          <p class="mt-6 text-muted max-w-2xl leading-relaxed">
+            Whether you're planning a special celebration or craving artisanal pastries, 
+            we're here to craft the perfect dessert for you.
+          </p>
+        </FadeIn>
+      </div>
+    </section>
+    
+    <!-- Contact Content -->
+    <section class="py-16 px-6 lg:px-8 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+          <!-- Contact Form -->
+          <FadeIn>
+            <form class="space-y-8" data-contact-form>
+              <div class="space-y-2">
+                <label for="name" class="block text-sm uppercase tracking-widest">
+                  Name
+                </label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name"
+                  required
+                  class="w-full px-0 py-3 bg-transparent border-0 border-b border-primary/20 focus:border-primary focus:ring-0 transition-colors placeholder:text-muted/50"
+                  placeholder="Your name"
+                />
+              </div>
+              
+              <div class="space-y-2">
+                <label for="email" class="block text-sm uppercase tracking-widest">
+                  Email
+                </label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email"
+                  required
+                  class="w-full px-0 py-3 bg-transparent border-0 border-b border-primary/20 focus:border-primary focus:ring-0 transition-colors placeholder:text-muted/50"
+                  placeholder="your@email.com"
+                />
+              </div>
+              
+              <div class="space-y-2">
+                <label for="project" class="block text-sm uppercase tracking-widest">
+                  Order Type
+                </label>
+                <select 
+                  id="project" 
+                  name="project"
+                  class="w-full px-0 py-3 bg-transparent border-0 border-b border-primary/20 focus:border-primary focus:ring-0 transition-colors"
+                >
+                  <option value="">Select an order type</option>
+                  <option value="custom-cake">Custom Cake</option>
+                  <option value="wedding">Wedding Desserts</option>
+                  <option value="event">Event Catering</option>
+                  <option value="pastries">Artisanal Pastries</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              
+              <div class="space-y-2">
+                <label for="message" class="block text-sm uppercase tracking-widest">
+                  Message
+                </label>
+                <textarea 
+                  id="message" 
+                  name="message"
+                  rows="5"
+                  required
+                  class="w-full px-0 py-3 bg-transparent border-0 border-b border-primary/20 focus:border-primary focus:ring-0 transition-colors resize-none placeholder:text-muted/50"
+                  placeholder="Tell us about your dessert wishes..."
+                ></textarea>
+              </div>
+              
+              <button 
+                type="submit"
+                class="inline-block px-10 py-4 bg-accent text-white text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors"
+              >
+                Send message
+              </button>
+            </form>
+          </FadeIn>
+          
+          <!-- Contact Info -->
+          <FadeIn delay={200}>
+            <div class="lg:pl-12 space-y-12">
+              <div class="space-y-4">
+                <h3 class="text-sm uppercase tracking-widest font-medium">Get in touch</h3>
+                <div class="space-y-2">
+                  <a 
+                    href="tel:+34644961876" 
+                    class="block text-muted hover:text-foreground transition-colors"
+                  >
+                    +34 644 961 876
+                  </a>
+                </div>
+              </div>
+              
+              <div class="space-y-4">
+                <h3 class="text-sm uppercase tracking-widest font-medium">Follow us</h3>
+                <div class="space-y-2">
+                  <a 
+                    href="https://www.instagram.com/lateliertimelessdesserts/" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block text-muted hover:text-foreground transition-colors"
+                  >
+                    @lateliertimelessdesserts
+                  </a>
+                </div>
+              </div>
+              
+              <div class="space-y-4">
+                <h3 class="text-sm uppercase tracking-widest font-medium">Location</h3>
+                <p class="text-muted">
+                  Torrox Park, Málaga<br />
+                  Costa del Sol, Spain
+                </p>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Base>
+
+<script>
+  const form = document.querySelector('[data-contact-form]') as HTMLFormElement;
+  const submitButton = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+  
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Disable button and show loading state
+    const originalText = submitButton.textContent;
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
+    
+    try {
+      const formData = new FormData(form);
+      
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        // Show success message
+        alert('Thank you for your message! We will be in touch soon.');
+        form.reset();
+      } else {
+        // Show error message
+        alert(result.error || 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      alert('An error occurred. Please try again later.');
+    } finally {
+      // Restore button
+      submitButton.disabled = false;
+      submitButton.textContent = originalText;
+    }
+  });
+</script>

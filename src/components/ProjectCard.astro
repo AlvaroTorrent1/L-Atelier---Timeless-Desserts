@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  title: string;
+  category: string;
+  slug: string;
+  image: ImageMetadata;
+  comingSoon?: boolean;
+}
+
+const { title, category, slug, image, comingSoon = false } = Astro.props;
+---
+
+<article class="group relative overflow-hidden">
+  {comingSoon ? (
+    <div class="relative aspect-[4/5] overflow-hidden bg-secondary">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <span class="text-sm uppercase tracking-widest text-muted">Coming Soon</span>
+      </div>
+    </div>
+  ) : (
+    <a href={`/projects/${slug}`} class="block">
+      <div class="relative aspect-[4/5] overflow-hidden">
+        <Image
+          src={image}
+          alt={title}
+          class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          widths={[400, 800, 1200]}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          loading="lazy"
+          decoding="async"
+        />
+        
+        <!-- Subtle overlay on hover -->
+        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+      </div>
+    </a>
+  )}
+  
+  <!-- Project info -->
+  <div class="mt-4 space-y-1">
+    <h3 class="font-serif text-lg">
+      {comingSoon ? (
+        <span class="text-muted">{title}</span>
+      ) : (
+        <a href={`/projects/${slug}`} class="hover:opacity-70 transition-opacity">
+          {title}
+        </a>
+      )}
+    </h3>
+    <p class="text-sm text-muted">{category}</p>
+  </div>
+</article>

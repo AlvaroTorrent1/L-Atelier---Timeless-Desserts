@@ -1,0 +1,73 @@
+---
+const currentYear = new Date().getFullYear();
+
+const socialLinks = [
+  { href: 'https://www.instagram.com/lateliertimelessdesserts/', label: 'Instagram' },
+];
+
+const navLinks = [
+  { href: '/about', label: 'About' },
+  { href: '/patisseries', label: 'Patisseries' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+
+<footer class="mt-auto border-t border-accent/20 bg-secondary">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
+    <!-- Logo centered -->
+    <div class="flex justify-center mb-12">
+      <a href="/" class="inline-block hover:opacity-80 transition-opacity">
+        <img 
+          src="/logo-footer.svg" 
+          alt="L'Atelier - Timeless Desserts" 
+          class="h-32 md:h-36 w-auto"
+        />
+      </a>
+    </div>
+    
+    <!-- Navigation centered -->
+    <nav class="flex justify-center gap-8 mb-12">
+      {navLinks.map(({ href, label }) => (
+        <a 
+          href={href} 
+          class="text-sm uppercase tracking-widest text-muted hover:text-accent transition-colors"
+        >
+          {label}
+        </a>
+      ))}
+    </nav>
+    
+    <!-- Social links centered -->
+    <div class="flex justify-center gap-6 mb-12">
+      {socialLinks.map(({ href, label }) => (
+        <a 
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-muted hover:text-accent transition-colors"
+          aria-label={label}
+        >
+          {label}
+        </a>
+      ))}
+    </div>
+    
+    <!-- Contact info -->
+    <div class="text-center mb-12 space-y-2">
+      <a 
+        href="tel:+34644961876" 
+        class="block text-sm text-muted hover:text-foreground transition-colors"
+      >
+        +34 644 961 876
+      </a>
+      <p class="text-sm text-muted">Torrox Park, Málaga</p>
+    </div>
+    
+    <!-- Copyright -->
+    <div class="pt-8 border-t border-accent/10">
+      <p class="text-xs text-muted text-center">
+        © {currentYear} L'Atelier - Timeless Desserts. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>

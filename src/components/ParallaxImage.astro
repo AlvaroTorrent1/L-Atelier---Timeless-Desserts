@@ -1,0 +1,98 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  class?: string;
+  speed?: number; // Parallax speed factor (0.1 - 0.5 recommended)
+  priority?: boolean;
+}
+
+const { 
+  src, 
+  alt, 
+  class: className = '', 
+  speed = 0.3,
+  priority = false 
+} = Astro.props;
+---
+
+<div 
+  class={`parallax-container relative overflow-hidden ${className}`}
+  data-parallax
+  data-speed={speed}
+>
+  <div class="parallax-inner will-change-transform">
+    <Image
+      src={src}
+      alt={alt}
+      class="w-full h-full object-cover scale-110"
+      widths={[800, 1200, 1920, 2560]}
+      sizes="100vw"
+      loading={priority ? 'eager' : 'lazy'}
+      decoding={priority ? 'sync' : 'async'}
+    />
+  </div>
+</div>
+
+<script>
+  function initParallax() {
+    const parallaxElements = document.querySelectorAll('[data-parallax]');
+    
+    if (!parallaxElements.length) return;
+    
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+    
+    function updateParallax() {
+      parallaxElements.forEach((element) => {
+        const container = element as HTMLElement;
+        const inner = container.querySelector('.parallax-inner') as HTMLElement;
+        const speed = parseFloat(container.dataset.speed || '0.3');
+        
+        const rect = container.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        
+        // Only animate when element is in viewport
+        if (rect.bottom < 0 || rect.top > viewportHeight) return;
+        
+        // Calculate parallax offset
+        const scrollProgress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
+        const offset = (scrollProgress - 0.5) * rect.height * speed;
+        
+        inner.style.transform = `translateY(${offset}px)`;
+      });
+    }
+    
+    // Use requestAnimationFrame for smooth animation
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateParallax();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+    
+    // Initial update
+    updateParallax();
+  }
+  
+  // Initialize on page load and after view transitions
+  initParallax();
+  document.addEventListener('astro:after-swap', initParallax);
+</script>
+
+<style>
+  .parallax-container {
+    height: 100%;
+  }
+  
+  .parallax-inner {
+    height: 100%;
+  }
+</style>

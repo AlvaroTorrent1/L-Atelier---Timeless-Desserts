@@ -1,0 +1,274 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FadeIn from '../../components/FadeIn.astro';
+import ParallaxImage from '../../components/ParallaxImage.astro';
+
+import { useTranslations, useTranslatedPath } from '../../i18n/utils';
+
+import heroImage from '../../assets/images/hero.png';
+import paintCans from '../../assets/images/paint-cans.png';
+import quoteBg from '../../assets/images/quote-bg.png';
+import materialsElitis from '../../assets/images/materials-elitis.jpg';
+import materialsFarrow from '../../assets/images/materials-farrow.jpg';
+import project1 from '../../assets/images/project-1.svg';
+import project2 from '../../assets/images/project-2.svg';
+import project3 from '../../assets/images/project-3.svg';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'es' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as any);
+const translatePath = useTranslatedPath(lang as any);
+
+const featuredCreations = [
+  { title: 'Wedding Cakes', category: 'custom, celebration', slug: 'wedding-cakes', image: project1 },
+  { title: 'Artisan Pastries', category: 'daily, french classics', slug: 'artisan-pastries', image: project2 },
+  { title: 'Celebration Desserts', category: 'events, birthdays', slug: 'celebration-desserts', image: project3 },
+];
+---
+
+<Base title={`L'Atelier — Timeless Desserts (${lang?.toUpperCase()})`}>
+  <Header transparent />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center">
+      <div class="absolute inset-0">
+        <ParallaxImage 
+          src={heroImage} 
+          alt="Artisanal French pastries and desserts" 
+          class="h-full"
+          priority
+          speed={0.2}
+        />
+        <!-- Subtle fade overlay for text readability -->
+        <div class="absolute inset-0 bg-gradient-to-b from-background/50 via-background/30 to-background/70"></div>
+      </div>
+      
+      <div class="relative z-10 text-center px-6 max-w-7xl mx-auto">
+        <FadeIn>
+          <img 
+            src="/hero-tagline.svg" 
+            alt="Passion - Tradition - Excellence" 
+            class="w-full mx-auto mb-10"
+          />
+        </FadeIn>
+        
+        <FadeIn delay={300}>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a 
+              href={translatePath('/contact')} 
+              class="inline-block px-8 py-4 bg-secondary text-primary text-sm font-light uppercase tracking-widest hover:bg-secondary/80 transition-colors"
+            >
+              {t('hero.cta.contact')}
+            </a>
+            <a 
+              href={translatePath('/patisseries')} 
+              class="inline-block px-8 py-4 bg-secondary text-primary text-sm font-light uppercase tracking-widest hover:bg-secondary/80 transition-colors"
+            >
+              {t('hero.cta.projects')}
+            </a>
+          </div>
+        </FadeIn>
+      </div>
+      
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2">
+        <div class="w-px h-16 bg-accent/30 relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-8 bg-accent animate-scroll"></div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- About Teaser -->
+    <section class="py-32 px-6 lg:px-8 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <FadeIn>
+            <div class="space-y-6">
+              <h2 class="font-display">
+                {t('about.title').split('delight').map((part, i, arr) => (
+                  <>
+                    {part}
+                    {i < arr.length - 1 && <em class="not-italic text-accent">delight</em>}
+                  </>
+                ))}
+              </h2>
+              <p class="text-muted leading-relaxed">
+                {t('about.p1')}
+              </p>
+              <p class="text-muted leading-relaxed">
+                {t('about.p2')}
+              </p>
+              <a 
+                href={translatePath('/about')} 
+                class="inline-block text-sm uppercase tracking-widest text-accent border-b border-accent pb-1 hover:text-accent-warm hover:border-accent-warm transition-colors"
+              >
+                {t('about.link')}
+              </a>
+            </div>
+          </FadeIn>
+          
+          <FadeIn delay={200}>
+            <div class="aspect-[3/4] overflow-hidden">
+              <img 
+                src={paintCans.src}
+                alt="Artisanal pastries and desserts"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Quote Section -->
+    <section class="relative py-32 lg:py-48">
+      <div class="absolute inset-0">
+        <img 
+          src={quoteBg.src}
+          alt="Every dessert tells a story"
+          class="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+    </section>
+    
+    <!-- Featured Creations -->
+    <section class="py-32 px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <FadeIn>
+          <div class="text-center mb-16">
+            <h2 class="font-display">{t('projects.title')}</h2>
+          </div>
+        </FadeIn>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {featuredCreations.map((creation, index) => (
+            <FadeIn delay={index * 100}>
+              <article class="group">
+                <a href={translatePath(`/patisseries/${creation.slug}`)} class="block">
+                  <div class="relative aspect-[4/5] overflow-hidden bg-secondary">
+                    <img 
+                      src={creation.image.src}
+                      alt={creation.title}
+                      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                </a>
+                <div class="mt-4 space-y-1">
+                  <h3 class="font-serif text-lg uppercase tracking-wide">
+                    <a href={translatePath(`/patisseries/${creation.slug}`)} class="hover:opacity-70 transition-opacity">
+                      {creation.title}
+                    </a>
+                  </h3>
+                  <p class="text-sm text-muted">{creation.category}</p>
+                </div>
+              </article>
+            </FadeIn>
+          ))}
+        </div>
+        
+        <FadeIn>
+          <div class="text-center mt-16">
+            <a 
+              href={translatePath('/patisseries')} 
+              class="inline-block text-sm uppercase tracking-widest text-accent border-b border-accent pb-1 hover:text-accent-warm hover:border-accent-warm transition-colors"
+            >
+              {t('projects.link')}
+            </a>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+    
+    <!-- Ingredients & Quality Section -->
+    <section class="py-32 px-6 lg:px-8 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <FadeIn>
+          <div class="text-center mb-16">
+            <h2 class="font-display">{t('materials.title')}</h2>
+            <p class="text-muted mt-4 max-w-2xl mx-auto">
+              {t('materials.p')}
+            </p>
+          </div>
+        </FadeIn>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+          <FadeIn>
+            <div class="group relative aspect-[3/4] overflow-hidden">
+              <img 
+                src={materialsElitis.src}
+                alt="Premium French chocolate and cocoa"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="absolute bottom-6 left-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <p class="text-background text-sm uppercase tracking-widest">Valrhona Chocolate</p>
+              </div>
+            </div>
+          </FadeIn>
+          
+          <FadeIn delay={150}>
+            <div class="group relative aspect-[3/4] overflow-hidden">
+              <img 
+                src={materialsFarrow.src}
+                alt="Fresh seasonal fruits and berries"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="absolute bottom-6 left-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <p class="text-background text-sm uppercase tracking-widest">Seasonal Fresh Fruits</p>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-32 px-6 lg:px-8 bg-secondary">
+      <div class="max-w-3xl mx-auto text-center">
+        <FadeIn>
+          <h2 class="font-display mb-6">{t('cta.title')}</h2>
+          <p class="text-muted mb-10 leading-relaxed">
+            {t('cta.p')}
+          </p>
+          <a 
+            href={translatePath('/contact')} 
+            class="inline-block px-10 py-4 bg-accent text-white text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors"
+          >
+            {t('cta.button')}
+          </a>
+        </FadeIn>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Base>
+
+<style>
+  @keyframes scroll {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(200%); }
+  }
+  
+  .animate-scroll {
+    animation: scroll 2s ease-in-out infinite;
+  }
+</style>
