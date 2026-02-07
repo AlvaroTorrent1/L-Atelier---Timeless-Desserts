@@ -5,9 +5,6 @@ import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FadeIn from '../components/FadeIn.astro';
-import { Image } from 'astro:assets';
-
-import aboutImage from '../assets/images/about.svg';
 ---
 
 <Base 
@@ -35,8 +32,8 @@ import aboutImage from '../assets/images/about.svg';
           <!-- Image -->
           <FadeIn>
             <div class="aspect-[3/4] overflow-hidden">
-              <Image
-                src={aboutImage}
+              <img
+                src="/Alex_tarta.jpg"
                 alt="Claire Thomas - L'Atelier Founder"
                 class="w-full h-full object-cover"
                 loading="eager"
